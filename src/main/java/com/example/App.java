@@ -10,30 +10,30 @@ public class App
     {
         System.out.println( "Hello World!" );
         /*
-        ✅ WEEK 8 — Jenkins Freestyle Jobs (VERY BEGINNER VERSION)
+        WEEK 8 — Jenkins Freestyle Jobs (VERY BEGINNER VERSION)
 Goal: Learn how to run Java & Web projects automatically using Jenkins.
 
-⭐ PART 1 — Install & Open Jenkins
+ PART 1 — Install & Open Jenkins
 1.Open your browser.
 2.Type: http://localhost:8080
 You will see the Jenkins dashboard.
 
-⭐ PART 2 — Create Maven Java Build Job (MavenJava_Build)
-1️⃣ Click “New Item”
+ PART 2 — Create Maven Java Build Job (MavenJava_Build)
+ Click “New Item”
 Left side → first option.
-2️⃣ Give a name
+Give a name
 Example:
 MavenJava_Build
 Select:
 Freestyle Project
 Click OK.
 
-3️⃣ Fill Project Details
+Fill Project Details
 Inside Configuration page:
 Description:
 Java Build demo
 
-4️⃣ Add GitHub Code
+Add GitHub Code
 Scroll to:
 ✔ Source Code Management → Choose Git
 You will see a box:
@@ -41,7 +41,7 @@ Repository URL
 Paste your Maven Java GitHub link here (example):
 https://github.com/someone/maven-java-demo.git
 
-5️⃣ Build Steps (Very Important)
+ Build Steps (Very Important)
 Scroll to Build section → click:
 ▶ Add Build Step → Invoke top-level Maven targets
 You will now add 2 steps:
@@ -51,7 +51,7 @@ STEP A
 STEP B (again click “Add Build Step”)
 Goals: install
 
-6️⃣ Post-Build Actions
+Post-Build Actions
 Scroll down → Click:
 ▶ Add post-build action → Archive the artifacts
 Files to archive: 
@@ -60,40 +60,42 @@ Then again:
 Enter: MavenJava_Test
 Choose:
 Trigger only if build is stable
-7️⃣ Save the job
+Save the job
 Click Save at bottom.
 
-⭐ PART 3 — Create MavenJava_Test Job
-1️⃣ Click “New Item”
+
+PART 3 — Create MavenJava_Test Job
+Click “New Item”
 Name: MavenJava_Test
 Select Freestyle → OK.
 
-2️⃣ Description
+ Description
 Test demo
 
-3️⃣ Build Environment
+Build Environment
 Scroll → tick:
 ✔ Delete workspace before build starts
 Why?
 It removes old files so test always runs fresh.
 
-4️⃣ Copy the build output from previous job
+Copy the build output from previous job
 Build Steps → Add Build Step → Copy artifacts from another project.
 Fill:
 Project name → MavenJava_Build
 Build → Stable build only
 Artifacts to copy: 
 
-5️⃣ Add Test Step
+Add Test Step
 Add Build Step → Invoke top-level Maven targets
 Goals: test
 
-6️⃣ Archive test results
+Archive test results
 Add Post Build Action → Archive artifacts
 Files: 
 Click Save
 
-⭐ PART 4 — Create Pipeline View
+ 
+ PART 4 — Create Pipeline View
 Steps:
 1.On Jenkins dashboard, click “+” beside “All”
 2.Name: MavenJava_Pipeline
@@ -102,15 +104,15 @@ Steps:
 oInitial job → MavenJava_Build
 5.Save.
 
-⭐ PART 5 — Run
+ PART 5 — Run
 1.Open pipeline view
 2.Click “Run”
 3.Green = success
 4.Click boxes → open console
 
-✨ Maven Java part DONE!
+ Maven Java part DONE!
 
-⭐ PART 6 — Repeat SAME for Maven Web Project
+PART 6 — Repeat SAME for Maven Web Project
 You will create 3 jobs:
 1.MavenWeb_Build
 2.MavenWeb_Test
@@ -127,19 +129,19 @@ opassword: 1234
 oURL: http://localhost:8085/
 Done.
 
-✅ WEEK 9 — Scripted Pipeline (BEGINNER VERSION)
+ WEEK 9 — Scripted Pipeline (BEGINNER VERSION)
 Goal: Create ONE Jenkins job using Pipeline script.
 
-1️⃣ Click “New Item”
+ Click “New Item”
 Name: ScriptedPipeline
 Choose: Pipeline
 Click OK.
 
-2️⃣ Scroll down to Pipeline section
+ Scroll down to Pipeline section
 Under Definition, select:
 Pipeline script
 
-3️⃣ Paste the script
+Paste the script
 
 pipeline {
 agent any
@@ -175,28 +177,28 @@ Change:
 git clone <paste your GitHub URL>
 And change “mavenjava” to your folder name if needed.
 
-4️⃣ Save
+Save
 
-5️⃣ Run
+Run
 Click Build now.
 Take screenshots of:
 Build stages
 Console output
 Done.
 
-✅ WEEK 10 — Minikube, Kubernetes, Nagios, AWS (BEGINNER VERSION)
+WEEK 10 — Minikube, Kubernetes, Nagios, AWS (BEGINNER VERSION)
 
-⭐ PART 1 — Minikube
-1️⃣ Start Minikube
+PART 1 — Minikube
+ Start Minikube
 Open CMD or PowerShell:
 minikube start
-2️⃣ Create an nginx server
+Create an nginx server
 kubectl create deployment mynginx --image=nginx
 Check:
 kubectl get pods
-3️⃣ Expose the deployment
+ Expose the deployment
 kubectl expose deployment mynginx --type=NodePort --port=80 --target-port=80
-4️⃣ Scale to 4 pods
+Scale to 4 pods
 kubectl scale deployment mynginx --replicas=4
 ->Port forwarding: kubectl port-forward svc/mynginx 8081:80
 8081 can be replaced by any
@@ -207,12 +209,13 @@ kubectl delete deployment mynginx
 kubectl delete service mynginx
 minikube stop
 
-⭐ PART 2 — Nagios in Docker
-1️⃣ Pull image
+ 
+ PART 2 — Nagios in Docker
+ Pull image
 docker pull jasonrivers/nagios:latest
-2️⃣ Run Nagios
+ Run Nagios
 docker run --name nagiosdemo -p 8888:80 jasonrivers/nagios:latest
-3️⃣ Open browser
+ Open browser
 Go to:
 http://localhost:8888
 Login:
@@ -220,16 +223,16 @@ Login:
 password: nagios
 stopping: docker stop nagiosdemo
 
-✅ WEEK 11 — GitHub Webhook + Jenkins Email (SUPER SIMPLE)
+WEEK 11 — GitHub Webhook + Jenkins Email (SUPER SIMPLE)
 
-⭐ PART 1 — Install ngrok
+PART 1 — Install ngrok
 Run in CMD:
 ngrok http 8080
 You will see:
 https://abc123.ngrok.io (just for example)
 Copy this.
 
-⭐ PART 2 — Add Webhook in GitHub
+PART 2 — Add Webhook in GitHub
 1.Open your GitHub repo → Settings → Webhooks
 2.Click Add Webhook
 3.Payload URL:
@@ -238,18 +241,18 @@ https://abc123.ngrok.io/github-webhook/ (make sure to add /github-webhook/ at th
 5.Events: ✔ Just the push event
 6.Add webhook
 
-⭐ PART 3 — Configure Jenkins job
+PART 3 — Configure Jenkins job
 Open your job → Configure → Build Triggers
 ✔ Tick: GitHub hook trigger for GITScm polling
 Save.
 
-⭐ PART 4 — Test webhook
+PART 4 — Test webhook
 1.Make any change to your GitHub project
 2.Push the code
 3.Jenkins WILL automatically start building
 DONE.
 
-⭐ PART 5 — Email Notification Setup (Beginner version)
+PART 5 — Email Notification Setup (Beginner version)
 Step 1 — Setup Gmail App Password
 1.Open Google Account → Security
 2.Turn on 2-step verification
@@ -270,16 +273,16 @@ Port → 465
 Click Send test email
 If received → success.
 
-⭐ PART 6 — Add email to Job
+ PART 6 — Add email to Job
 Open your job → Configure → Post-build actions:
 Add:
 Editable Email Notification
 Add recipients → Save → Build.
 DONE.
 
-✅ WEEK 12 — Deploying App in AWS EC2 Using Docker
+WEEK 12 — Deploying App in AWS EC2 Using Docker
 
-⭐ PART 1 — Create EC2 instance
+PART 1 — Create EC2 instance
 1.AWS → Start Lab and click on the green-dot → EC2 → Launch Instance
 2.Name: ubuntu
 3.AMI: Ubuntu Server 22.04 LTS (Free tier)
@@ -290,14 +293,14 @@ DONE.
 ✔ HTTP (80)
 7.Launch instance.
 
-⭐ PART 2 — Connect to EC2
+PART 2 — Connect to EC2
 Go to instance → Click Connect → SSH tab
 Copy:
 ssh -i "your-key.pem" ubuntu@<your-public-ip>
 Paste into PowerShell.
 You are now inside your remote Ubuntu machine.
 
-⭐ PART 3 — Install 
+PART 3 — Install 
 Run:
 sudo apt update
 sudo apt-get install docker.io
@@ -305,11 +308,12 @@ sudo apt install git
 sudo apt install nano
 
 Create a html file and push into git or what ever is given 
-⭐ PART 4 — Clone your project
+PART 4 — Clone your project
 git clone <your GitHub link>
 cd <project folder>
 
-⭐ PART 5 — Create Dockerfile
+ 
+ PART 5 — Create Dockerfile
 Run:
 nano Dockerfile
 Paste:
@@ -322,15 +326,15 @@ Save:
 CTRL + O → Enter
 CTRL + X
 
-⭐ PART 6 — Build Docker image
+PART 6 — Build Docker image
 sudo docker build -t mywebapp .
 
-⭐ PART 7 — Run the container
+PART 7 — Run the container
 sudo docker run -d -p 80:80 mywebapp
 
-⭐ PART 8 — Open your website
+PART 8 — Open your website
 Copy your EC2 public IP
-Paste in browser → Your website appears 🎉
+Paste in browser → Your website appears 
 ->Stopping 
 sudo docker ps -> gives container id 
 sudo docker stop <container id>
