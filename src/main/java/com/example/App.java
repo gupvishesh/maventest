@@ -47,61 +47,6 @@ Right-click index.jsp > Run As > Run on Server; Select Tomcat; Finish.
 Output: Hello World webpage in browser.
 
 
-
-
-        WEEK 8 — Jenkins Freestyle Jobs (VERY BEGINNER VERSION)
-Goal: Learn how to run Java & Web projects automatically using Jenkins.
-
- PART 1 — Install & Open Jenkins
-1.Open your browser.
-2.Type: http://localhost:8080
-You will see the Jenkins dashboard.
-
- PART 2 — Create Maven Java Build Job (MavenJava_Build)
- Click “New Item”
-Left side → first option.
-Give a name
-Example:
-MavenJava_Build
-Select:
-Freestyle Project
-Click OK.
-
-Fill Project Details
-Inside Configuration page:
-Description:
-Java Build demo
-
-Add GitHub Code
-Scroll to:
-✔ Source Code Management → Choose Git
-You will see a box:
-Repository URL
-Paste your Maven Java GitHub link here (example):
-https://github.com/someone/maven-java-demo.git
-
- Build Steps (Very Important)
-Scroll to Build section → click:
-▶ Add Build Step → Invoke top-level Maven targets
-You will now add 2 steps:
-STEP A
-Maven version: select your configured Maven (example: MAVEN_HOME)
-Goals: clean
-STEP B (again click “Add Build Step”)
-Goals: install
-
-Post-Build Actions
-Scroll down → Click:
-▶ Add post-build action → Archive the artifacts
-Files to archive: 
-Then again:
-▶ Add post-build action → Build other projects
-Enter: MavenJava_Test
-Choose:
-Trigger only if build is stable
-Save the job
-Click Save at bottom.
-
 REDIS
 Pull the redis image
 docker pull redis
@@ -286,6 +231,61 @@ Bashdocker compose down
 Start again:
 
 Bashdocker compose up -d
+
+
+        WEEK 8 — Jenkins Freestyle Jobs (VERY BEGINNER VERSION)
+Goal: Learn how to run Java & Web projects automatically using Jenkins.
+
+ PART 1 — Install & Open Jenkins
+1.Open your browser.
+2.Type: http://localhost:8080
+You will see the Jenkins dashboard.
+
+ PART 2 — Create Maven Java Build Job (MavenJava_Build)
+ Click “New Item”
+Left side → first option.
+Give a name
+Example:
+MavenJava_Build
+Select:
+Freestyle Project
+Click OK.
+
+Fill Project Details
+Inside Configuration page:
+Description:
+Java Build demo
+
+Add GitHub Code
+Scroll to:
+✔ Source Code Management → Choose Git
+You will see a box:
+Repository URL
+Paste your Maven Java GitHub link here (example):
+https://github.com/someone/maven-java-demo.git
+
+ Build Steps (Very Important)
+Scroll to Build section → click:
+▶ Add Build Step → Invoke top-level Maven targets
+You will now add 2 steps:
+STEP A
+Maven version: select your configured Maven (example: MAVEN_HOME)
+Goals: clean
+STEP B (again click “Add Build Step”)
+Goals: install
+
+Post-Build Actions
+Scroll down → Click:
+▶ Add post-build action → Archive the artifacts
+Files to archive: 
+Then again:
+▶ Add post-build action → Build other projects
+Enter: MavenJava_Test
+Choose:
+Trigger only if build is stable
+Save the job
+Click Save at bottom.
+
 
 PART 3 — Create MavenJava_Test Job
 Click “New Item”
