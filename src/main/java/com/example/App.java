@@ -10,6 +10,45 @@ public class App
     {
         System.out.println( "Hello World!" );
         /*
+WEEK 2
+
+Maven Java Project Creation Steps
+Open Eclipse IDE for Enterprise Java and Web Developers.
+File > New > Maven Project.
+Filter: quickstart; select org.apache.maven.archetypes maven-archetype-quickstart 1.4; Next.
+Group ID: e.g., SE or com.example; Artifact ID: e.g., MavenJava; Next.
+Confirm artifacts in console; press Y to proceed.
+Project created with pom.xml, src/main/java/App.java (Hello World sample).
+Right-click App.java > Run As > Maven Clean.
+Right-click App.java > Run As > Maven Install.
+Right-click App.java > Run As > Maven Test.
+Right-click App.java > Run As > Maven Build; Goals: clean install test; Apply > Run.
+Check console for BUILD SUCCESS.
+Right-click App.java > Run As > Java Application; Output: Hello World.
+
+
+Maven Web Project Creation Steps
+Open Eclipse IDE.
+File > New > Maven Project.
+Filter: webapp; select org.apache.maven.archetypes maven-archetype-webapp 1.4; Next.
+Group ID: e.g., SE or com.example; Artifact ID: e.g., MavenWeb; Next.
+Confirm artifacts in console; press Y.
+Project created with pom.xml, src/main/webapp/index.jsp (Hello World sample).
+Open mvnrepository.com; search Java Servlet API; copy latest dependency; paste in pom.xml.
+Window > Show View > Servers; Add Tomcat v9.0 or v11.0; Configure.
+Double-click server; Set Server Locations to Use Tomcat Installation; Modify ports (Admin: 0, HTTP/1.1: 8085).
+Edit tomcat-users.xml: Add role and user (e.g., admin-gui, manager-gui; username: admin, password: 1234).
+Right-click index.jsp > Run As > Maven Clean.
+Right-click index.jsp > Run As > Maven Install.
+Right-click index.jsp > Run As > Maven Test.
+Right-click index.jsp > Run As > Maven Build; Goals: clean install test; Apply > Run.
+Check console for BUILD SUCCESS.
+Right-click index.jsp > Run As > Run on Server; Select Tomcat; Finish.
+Output: Hello World webpage in browser.
+
+
+
+
         WEEK 8 — Jenkins Freestyle Jobs (VERY BEGINNER VERSION)
 Goal: Learn how to run Java & Web projects automatically using Jenkins.
 
@@ -63,6 +102,190 @@ Choose:
 Save the job
 Click Save at bottom.
 
+REDIS
+Pull the redis image
+docker pull redis
+Run a Redis container in background
+docker run --name my-redis -d redis
+List running containers
+docker ps
+Access the Redis CLI inside the container
+docker exec -it my-redis redis-cli
+(Inside redis-cli) Set and get a key
+SET name "Alice" → GET name → exit
+Stop the container
+docker stop my-redis
+Restart the stopped container
+docker start my-redis
+Remove the container (must be stopped first)
+docker rm my-redis
+Remove the redis image
+docker rmi redis
+
+Working with Dockerfile & Custom Image
+
+Create project folder and navigate into it
+Windows: C:\DockerProjects\Redis → Git Bash: cd /c/DockerProjects/Redis
+Mac/Linux: mkdir ~/DockerProjects/Redis && cd ~/DockerProjects/Redis
+Create a file named Dockerfile (no extension) with content:textFROM redis:latest
+CMD ["redis-server"]
+Build custom image named redisnew
+docker build -t redisnew .
+Run container from the new image
+docker run --name myredisnew -d redisnew
+Check running containers
+docker ps
+Stop the container
+docker stop myredisnew
+Login to Docker Hub
+docker login
+List all containers (including stopped)
+docker ps -a
+Commit (save) the running/stopped container as a new image
+docker commit <container-id> budarajumadhurika/redis1
+(replace container-id with actual ID of myredisnew)
+List all images (you will see budarajumadhurika/redis1)
+docker images
+Push the custom image to Docker Hub
+docker push budarajumadhurika/redis1
+Remove the container
+docker rm <container-id>
+Remove the local custom image
+docker rmi budarajumadhurika/redis1
+Check containers again
+docker ps -a
+Logout from Docker Hub
+docker logout
+Pull your own uploaded image
+docker pull budarajumadhurika/redis1
+Run a new container from your uploaded image
+docker run --name myredis -d budarajumadhurika/redis1
+Enter the container and open redis-cli
+docker exec -it myredis redis-cli
+(Inside redis-cli) Test persistence
+SET name "Abcdef" → GET name → exit
+List all containers
+docker ps -a
+Stop the container
+docker stop myredis
+Remove the container
+docker rm <container-id>
+List images again
+docker images
+Remove your custom image again
+docker rmi budarajumadhurika/redis1
+(Optional) Logout from Docker Hub
+docker logout
+
+
+DOCKER COMPOSE
+Step-by-Step (Exactly as in the PDF)
+
+Create a folder named compose-lab
+Inside the folder, create a file named docker-compose.yml
+Task 1 – Paste this exact content:
+
+YAMLversion: "3.9"
+services:
+  web:
+    image: nginx:latest
+    ports:
+      - "8080:80"
+
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: demo
+      POSTGRES_PASSWORD: demo
+      POSTGRES_DB: demo_db
+
+Run:
+
+Bashdocker compose up -d
+
+Open browser → http://localhost:8080
+→ You see Nginx welcome page
+Task 2 – Edit docker-compose.yml → Add Redis + depends_on (final file becomes):
+
+YAMLversion: "3.9"
+services:
+  web:
+    image: nginx:latest
+    ports:
+      - "8080:80"
+    depends_on:
+      - redis
+
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: demo
+      POSTGRES_PASSWORD: demo
+      POSTGRES_DB: demo_db
+
+  redis:
+    image: redis:alpine
+
+Restart:
+
+Bashdocker compose up -d
+
+Check:
+
+Bashdocker compose ps
+→ You see 3 services running: web, db, redis
+
+Task 4 – Replace entire docker-compose.yml with this final version (adds network + volume):
+
+YAMLversion: "3.9"
+
+networks:
+  app-net:
+
+volumes:
+  db-data:
+
+services:
+  web:
+    image: nginx:latest
+    ports:
+      - "8080:80"
+    networks:
+      - app-net
+    depends_on:
+      - db
+
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: demo
+      POSTGRES_PASSWORD: demo
+      POSTGRES_DB: demo_db
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    networks:
+      - app-net
+
+Bring up again:
+
+Bashdocker compose up -d
+
+Insert data into Postgres (to prove persistence):
+
+Bashdocker exec -it compose-lab-db-1 psql -U demo -d demo_db
+Inside psql, run:
+SQLCREATE TABLE users (id SERIAL PRIMARY KEY, name VARCHAR(50));
+INSERT INTO users (name) VALUES ('Alice'), ('Bob');
+SELECT * FROM users;
+\q
+
+Stop everything:
+
+Bashdocker compose down
+
+Start again:
+
+Bashdocker compose up -d
 
 PART 3 — Create MavenJava_Test Job
 Click “New Item”
