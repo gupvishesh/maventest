@@ -1,0 +1,376 @@
+# SE Lab
+
+# SRS
+
+abstract
+func
+non func
+user
+workflow
+use case
+
+## **Maven Java Web App**
+
+## Steps
+
+1. select file
+2. import
+3. git (1st option 2nd option enter git link keep clicking next and finish)
+4. check pom.xml
+5. right click run as
+    1. clean
+    2. install
+    3. test 
+    4. build — clean install test
+6. if maven java → run as java application
+7. if maven web → run on server
+
+## **Docker Containerization**
+
+dockerhubname - rythma
+
+## docker image creation
+
+1. Run a container (Ubuntu base)
+    
+    docker run -it -p 9091:80 --name ubuntu-cont-1 ubuntu:latest
+    
+2. Inside container → install packages
+    
+    apt update
+    apt install -y git
+    git --version
+    
+3. Exit container - exit
+4. Commit the container to create an image
+
+        docker commit ubuntu-cont-1 img-commit-1
+
+1. Check image - docker images
+2. Run the new image - docker run -it img-commit-1
+3. exit
+4. tag the image - docker tag img-commit-1 dockerhubname/img-commit-1
+5. push image - docker push dockerhubname/img-commit-1
+
+### using docker file
+
+1. docker file
+    
+    FROM ubuntu:20.04
+    ENV DEBIAN_FRONTEND=noninteractive
+    RUN apt-get update && \
+    apt-get install -y git && \
+    apt-get clean
+    WORKDIR /app
+    CMD ["bash"]
+    
+2. crete project folder
+    1. mkdir image-creation
+    cd image-creation
+3. write the docker file
+4. build the image - docker build -t img-dockerfile-1 .
+5. run image - docker run -it img-dockerfile-1
+6. exit
+7. tag docker hub - docker tag img-dockerfile-1 dockerhubname/img-dockerfile-1
+8. push image - docker push dockerhubname/img-dockerfile-1
+
+## **Docker Compose**
+
+### without compose
+
+1. docker run -d -p 8010:80 nginx
+docker run -d -p 8020:8080 tomee
+2. open localhost:8010 and 8020
+
+### with compose
+
+1. notepad docker-compose.yml
+    
+    services:
+    web:
+    image: nginx
+    ports:
+    - "8060:80"
+    app:
+    image: tomee
+    ports:
+    - "8050:8080"
+    
+2. docker-compose up -d
+3. Access:
+    1. [http://localhost:8060](http://localhost:8060/)
+    2. http://localhost:8050
+
+# Jenkins
+
+### pre requisites
+
+1. local host 8080 - tomcat (userid and pass default admin admin)
+2. plugin
+    1. email - extension
+3. tools and configuration
+    1. maven, git,jdk paths
+
+- start jenkins using the command
+    - java -jar jenkins.war
+    - type this in the cmd opened in the jenkins.war location
+
+# two pipeline
+
+### steps
+
+1. create new item
+2. give name choose freestyle project
+3. sorce code management - choose git
+    1. paste the url
+    2. change branch to main
+4. build steps
+    1. invoke top-level maven targets
+        1. clean
+        2. install
+5. post build actions
+    1. archive the artifacts - **/*
+    2. build other projects - maven_test
+6. go to dahsboard 
+7. create new item name it maven_test freestyle proect
+8. build environment - delete workspace before build starts
+9. build steps
+    1. copy artifacts
+        1. give proj1 name (maven_build)
+        2. artifats to copy - **/*
+        3. choose stable build only
+    2. invoke top level maven target - test
+10. post build - archive the artifacts - **/*
+11. go to dashboard
+12. click on “+” to add a view 
+13. name the view and select build pipeline then create
+14. choose up to down stream layout and maven build
+15. save and apply 
+16. run wait for it to turn green
+17. two pipline is done 
+
+# three pipeline
+
+### steps
+
+1. create new item
+2. give name choose freestyle project
+3. sorce code management - choose git
+    1. paste the url
+    2. change branch to main
+4. build steps
+    1. invoke top-level maven targets
+        1. clean
+        2. install
+5. post build actions
+    1. archive the artifacts - **/*
+    2. build other projects - mavenweb_test
+6. go to dahsboard 
+7. create new item name it mavenweb_test freestyle project
+8. build environment - delete workspace before build starts
+9. build steps
+    1. copy artifacts
+        1. give proj1 name (maven_build)
+        2. artifats to copy - **/*
+        3. choose stable build only
+    2. invoke top level maven target - test
+10. post build - archive the artifacts - **/*
+11. go to dashboard
+12. create new item name it mavenweb_deploy freestyle project
+13. build steps
+    1. copy artifacts from another project - mavenweb_test
+    2. leave rest as default
+14. post build steps 
+    1. select deploy war/ear to container
+    2. **/*
+    3. webpath
+    4. add container select tomcat v9
+        1. credentials and path
+15. click on “+” to add a view 
+16. name the view and select build pipeline then create
+17. select mavenweb_build
+18. choose up to down stream layout and maven build
+19. save and apply 
+
+# scripted pipeline
+
+## steps
+
+1. go to Jenkins dashboard
+2. click **New Item**
+3. give name → **pipeline_script**
+4. select **Pipeline** → click **OK**
+5. scroll down to **Pipeline** section
+6. under **Definition**, choose **Pipeline script**
+7. pipeline code
+    
+    ```
+    pipeline{
+    	agent any
+    	
+    	stages {
+    	    stage('Hello 1') {
+    	        steps {
+    	            echo 'Hello World 1'
+    	        }
+    	    }
+    	
+    	    stage('Hello 2') {
+    	        steps {
+    	            echo 'Hello World 2'
+    	        }
+    	    }
+    	 }
+    }
+    ```
+    
+8. click **Apply** → **Save**
+9. click **Build Now**
+10. wait for blue/green success
+
+# Webook
+
+## steps
+
+1. build a two pipline project
+2. in build step 
+    1. enble git scm and poll scm triggers
+3. go to github settings of your repo
+4. add webhook
+5. open ngrok
+6. run ngrok http 8080 (or whatever port your jenkins is running on)
+7. copy the url 
+8. paste in payload in github with /github-webhook/
+9. add webhook wait till u get a green tick
+10. make a change in your repo and commit
+11. automatically build will start in jenkins
+
+# Email Notification
+
+## steps
+
+1. open configure jenkins system
+2. scroll to email notifications
+3. server  - smtp.gmail.com
+4. username - gmail username
+5. password - generate app password
+6. select ssl
+7. port 465
+8. test email
+9. go to build job add email notification in post build actions
+
+# KUBERNETES - Minikube
+
+### pre requisites
+
+1. docker desktop should be running
+2. should have a docker image
+
+### steps
+
+1. open your docker desktop
+2. minikube start
+    1. if it doesnt work run these
+    2. minikube start —driver=hyperv
+    3. minikube start —driver=docker
+3. minikube start
+4. minikube status
+5. kubectl create deployment mynginx  —image=nginx
+6. kubectl get deployments
+7. kubectl get pods
+8. kubectl describe pods
+9. kubectl expose deployment mynginx  —type=NodePort  —port=80  -target-port=80
+10. kubectl get service mynginx
+11. kubectl port-forward svc/mynginx 80:80
+12. kubectl get deployment
+13. kubectl scale deployment mynginx
+14. kubectl get pods
+
+## Nagios
+
+### steps
+
+1. docker pull jasonrivers/nagios:latest
+2. docker run --name nagiosdemo -p 8888:80 jasonrivers/nagios:latest
+3. OPEN [http://localhost:8888](http://localhost:8888/)
+4. Login:
+username: nagiosadmin
+password: nagios
+5. docker stop nagiosdemo
+
+## AWS
+
+### steps
+
+1. go to modules
+2. select the launch aws learner lab
+3. then start lab
+4. wait till aws is green then click on it 
+5. go to EC2 and then launch instance 
+6. give name tag, then choose ubuntu, then generate a key pair, then check the firewall add anywhere all traffic and then launch
+7. once the instance is created, click on the instance and then click on connect
+8. int the cli tht pops up type the following commands
+    1. sudo su
+    2. sudo apt-get update
+    3. sudo apt-get install [docker.io](http://docker.io) enter y
+    4. sudo docker —version
+    5. sudo docker images
+    6. sudo docker ps
+    7. git clone http of the maven web application
+    8. cd folder name
+    9. ls
+    10. nano Dockerfile
+    11. sudo docker build -t img1  .
+    12. sudo docker run -d -p 8080:8080 img1
+    13. copy the public ip
+    14. got to incog ip:portnumber
+    15. exit
+
+## UML
+
+1. use case diagram
+2. class diagram
+3. sequence diagram
+4. component diagram
+
+case studies - library management system etc
+
+## **Git & GitHub**
+
+git init                 → Creates a new local Git repository
+git status               → Shows changed, staged, and untracked files
+git add .                → Adds all files to staging area
+git add <filename>       → Adds a specific file to staging
+git commit -m "msg"      → Saves staged changes with a commit message
+git log                  → Shows full commit history
+git log --oneline        → Shows short commit history
+
+git branch               → Shows all branches
+git branch <name>        → Creates a new branch
+git checkout <name>      → Switches to a branch
+git checkout -b <name>   → Creates AND switches to a new branch
+git switch <name>        → Switches branch (newer command)
+
+git merge <name>         → Merges the branch into current branch
+
+git remote add origin <url>  → Connects local repo to remote repo
+git remote -v                → Shows remote URL
+git push origin <branch>     → Pushes code to GitHub
+git push -u origin <branch>  → First push + sets upstream branch
+git pull origin <branch>     → Gets latest code from GitHub
+git clone <url>              → Downloads a repository
+
+git reset <file>             → Unstages a file
+git reset --hard <commit>    → Resets repo to an old commit (deletes changes)
+git revert <commit>          → Creates a new commit that undoes an old commit
+
+git stash                    → Temporarily saves uncommitted work
+git stash list               → Shows all stashes
+git stash apply              → Restores latest stash
+git stash drop               → Deletes a stash
+
+git diff                     → Shows differences between files
+git show <commit>            → Shows details of a specific commit
+
+git tag v1.0                 → Creates a version tag
+git push origin --tags       → Pushes tags to GitHub

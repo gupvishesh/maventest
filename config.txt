@@ -1,0 +1,625 @@
+Docker version 27.4.0
+git version 2.47.1
+apache tomcat 9.0.98
+java version 21
+maven version 3.9.9
+
+------------------------------------------------------------------------------------------
+SRS
+abstract
+func
+non func
+user
+workflow
+use case
+------------------------------------------------------------------------------------------
+
+BUILD AND PACKAGE JAVA AND WEB APPLICATIONS USING MAVEN
+
+
+JAVA APPLICATION
+
+1. open eclipse -> click on file -> new -> maven project
+2. select the default workspace and click on next
+3. in the filter option select the one "maven-archetype-quickstart"
+4. give the Group Id (org.example1) and Artifact Id (23bd1a056h) and click on next
+5. In the console the progress will be showed type y (refers to yes) and press enter
+6.  BUILD SUCCESS will be shown
+7.  write the code in the App.java file
+clean install test
+8. right click on the root folder and select show in git bash 
+9. git init
+10. git remote add origin https://github.com/RishikaJala/external
+11. git add .
+12. git commit -m "initial commit"
+13. git push -u origin main
+14. check in GitHub link
+15. open pom.xml
+
+
+
+CODE:  
+23bd1a56h/src/main/java/org/example1/bd1a056h/App.java
+
+package org.example1.bd5a05031;
+
+/**
+ * Hello world!
+ */
+
+import java.util.*;
+
+public class App {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        double a, b, result = 0;
+        char op;
+
+        System.out.print("Enter first number: ");
+        a = sc.nextDouble();
+
+        System.out.print("Enter operator (+, -, *, /): ");
+        op = sc.next().charAt(0);
+
+        System.out.print("Enter second number: ");
+        b = sc.nextDouble();
+
+        switch (op) {
+            case '+':
+                result = a + b;
+                break;
+            case '-':
+                result = a - b;
+                break;
+            case '*':
+                result = a * b;
+                break;
+            case '/':
+                result = b != 0 ? a / b : Double.NaN;
+                break;
+            default:
+                System.out.println("Invalid operator");
+        }
+
+        System.out.println("Result: " + result);
+        sc.close();
+    }
+}
+
+WEB APPLICATION
+
+1. open eclipse -> click on file -> new -> maven project
+2. select the default workspace and click on next
+3. in the filter option select the one "maven-archetype-quickstart" 1.4 v
+4. give the Group Id (org.example1) and Artifact Id (23bd1a056h) and click on next
+5. In the console the progress will be showed type y (refers to yes) and press enter
+6.  BUILD SUCCESS will be shown
+7. write the code in the index.jsp file
+clean install test
+8.  Select run on server
+9. show output
+10. To push it into git, select git bash from show in local terminal
+11. git init
+12. git add .
+13. git commit -m "commited"
+14. git branch
+15. git push origin main
+16. verify repo in github
+
+CODE:  
+23bd1a56h-web-app-22/src/main/webapp/index.jsp
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Form</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .form-container {
+            background: #fff;
+            padding: 20px 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+
+        .form-container h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .form-container input {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .form-container button {
+            width: 100%;
+            padding: 10px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .form-container button:hover {
+            background: #45a049;
+        }
+    </style>
+
+</head>
+<body>
+
+<div class="form-container">
+    <h2>Registration Form</h2>
+
+    <form action="#" method="post">
+
+        <label for="fullname">Full Name</label>
+        <input type="text" id="fullname" name="fullname" placeholder="Enter your name" required>
+
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" placeholder="Enter your email" required>
+
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" placeholder="Enter password" required>
+
+        <label for="confirm">Confirm Password</label>
+        <input type="password" id="confirm" name="confirm" placeholder="Confirm password" required>
+
+        <button type="submit">Register</button>
+
+    </form>
+</div>
+
+</body>
+</html>
+
+------------------------------------------------------------------------------------------
+
+DOCKER CLI COMMANDS in cmd
+DOCKER DESKTOP MUST BE RUNNING
+1. docker --version
+2. docker pull ubuntu:
+3. docker run -it -p 9090:80 --name myubuntu ubuntu
+4. # apt update
+5. # ls
+6. # cd usr
+7. # ls
+8. # cd share
+9. # ls
+apt install nginx -y
+service nginx start
+10. # cd nginx
+11. # ls
+12. # cs html
+13. # ls
+14. # apt install nano
+15. # nano index.html
+16. open localhost:9090
+
+
+CODE: index.html
+<!DOCTYPE html>
+<html>
+<head>
+<title>Welcome to nginx!</title>
+<style>
+html { color-scheme: light dark; }
+body { width: 35em; margin: 0 auto;
+font-family: Tahoma, Verdana, Arial, sans-serif; }
+</style>
+</head>
+<body>
+<h1>Welcome user, I'm Neksha Srinivas!</h1>
+<p>If you see this page, the nginx web server is successfully installed and 
+working. Further configuration is required.</p>
+
+<p>For online documentation and support please refer to 
+<a href="http://nginx.org/">nginx.org</a>.<br/>
+Commercial support is available at 
+<a href="http://nginx.com/">nginx.com</a>.</p>
+
+<p><em>Thank you for using nginx.</em></p>
+</body>
+</html>
+
+
+------------------------------------------------------------------------------------------
+
+DOCKER IMAGE CREATION -> USING DOCKER FILE AND DOCKER COMMIT
+
+USING DOCKER COMMIT
+1. docker run -it -p 9091:80 --name ubuntu-cont-1 ubuntu:latest
+2. apt update
+3. docker commit ubuntu-cont-1 img-commit-1
+4. docker images
+5. docker run -it img-commit-1
+6. git --version
+7. exit
+8. docker tag img-commit-1 rishikajala/img-commit-1
+9. docker push img-commit-1 rishikajala/img-commit-1
+
+USING DOCKERFILE
+1. mkdir image-creation
+2. ls
+3. cd image-creation
+4. notepad Dockerfile
+5. ls
+6. ren Dockerfile.txt Dockerfile
+7. docker build -t img-dockerfile-1 .
+8. docker run -it img-dockerfile-1
+9. git --version
+10. exit
+11. docker tag img-dockerfile-1 rishikajala/img-dockerfile-1
+12. docker push img-dockerfile-1 rishikajala/img-dockerfile-1
+13. docker images
+
+DOCKERFILE
+
+FROM ubuntu:20.04
+ENV DEBIAN_FRONTEND=noninteractive
+RUN apt-get update && \
+    apt-get install -y git && \
+    apt-get clean
+WORKDIR /app
+CMD ["bash"]
+
+\ indicates backward slash :)
+
+DOCKER COMPOSE
+
+1. docker run -d -p 8010:80 nginx
+2. docker run -d -p 8020:8080 tome
+3. open localhost:8010 and 8020
+4. notepad docker-compose.yml
+5. ren Dockerfile docker-compose.yml
+6. docker-compose up -d
+7. localhost:8060 and 8050
+
+CODE: docker-compose.yml
+services:
+  web:
+    image: nginx
+    ports:
+      - "8060:80"
+
+  db:
+    image: tomee
+    ports:
+      - "8050:8080"
+
+WORD PRESS
+
+1. cd MySQL
+2. notepad docker-compose.yml
+3. ls
+4. docker-compose up -d
+5. localhost:9080
+
+CODE: 
+services:
+  wordpress: # WordPress service
+    image: wordpress:latest
+    ports:
+      - "9080:80"   # Map port 80 of the container to port 9080 of the host
+    environment:
+      WORDPRESS_DB_HOST: db:3306   # Database host
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: wordpress
+      WORDPRESS_DB_NAME: wordpress
+    depends_on:
+      - db  # Ensure the db service starts first
+
+  db: # MySQL service
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: wordpress
+
+------------------------------------------------------------------------------------------
+
+JENKINS  MAVEN JAVA AUTOMATION
+
+CI/CD FREESTYLE MAVEN JAVA PROJECT
+
+1. open localhost:8080
+2. credentials
+3. click on new item
+4. SampleMavenJava_build
+5. click freestyle project and click okay
+6. scroll to source code management and select git
+7. type GitHub link
+8. in branches to build section check for main/ master branch
+9. go to build steps and click on add build step
+10. select invoke top level maven targets
+11. in maven version select MAVEN_HOME and type clean in goals
+12. go to build steps and click on add build step
+13. select invoke top level maven targets
+14. in maven version select MAVEN_HOME and type install in goals
+15. click on add post build action and select archive the artifacts
+16. in files to archive select **/*
+17.click on add post build action and select build other projects
+18. type SampleMavenJavaProject_test -> apply and save
+19.click on new item
+20. SampleMavenJava_test
+21. click freestyle project and click okay
+22. scroll to environment and select delete workspace before build starts
+23. click on add build step and select copy artifacts from other projects
+24. type SampleMavenProject_build and select stable build only
+25. **/* in artifacts to copy
+26. go to build steps and click on add build step
+27. select invoke top level maven targets
+28. in maven version select MAVEN_HOME and type test in goals
+29. click on add post build action and select archive the artifacts
+30. in files to archive select **/*
+31. dashboard -> + symbol
+32. SampleMavenProject_pipeline and select Build pipeline view
+33. scroll to pipeline flow and under select initial job choose the build file
+34. apply and okay
+35. click on run
+
+
+CI/CD FREESTYLE MAVEN WEB AUTOMATION PROJECT
+
+1.	Open localhost:8080
+2.	Enter credentials
+3.	Click on "New Item"
+4.	Type: SampleMavenProject_build
+5.	Select "Freestyle project" and click OK
+6.	Scroll to "Source Code Management" and select "Git"
+7.	Enter the GitHub repository link
+8.	In "Branches to build", type either */main or */master
+9.	Go to "Build Steps" and click on "Add build step"
+10.	Select "Invoke top-level Maven targets"
+11.	In Maven Version, select MAVEN_HOME
+12.	In Goals, type: clean
+13.	Go to Build Steps again and click on "Add build step"
+14.	Select "Invoke top-level Maven targets"
+15.	In Maven Version, select MAVEN_HOME
+16.	In Goals, type: install
+17.	Click "Add post-build action" and select "Archive the artifacts"
+18.	In "Files to archive", type: */
+19.	Click "Add post-build action" and select "Build other projects"
+20.	In Projects to build, type: SampleMavenProject_test
+21.	Click Apply and Save
+22.	Click on "New Item"
+23.	Type: SampleMavenProject_test
+24.	Select "Freestyle project" and click OK
+25.	Scroll to "Build Environment"
+26.	Enable "Delete workspace before build starts"
+27.	Click "Add build step" and select "Copy artifacts from other projects"
+28.	In Project name, type: SampleMavenProject_build
+29.	Select "Stable build only"
+30.	In "Artifacts to copy", type: */
+31.	Go to Build Steps and click "Add build step"
+32.	Select "Invoke top-level Maven targets"
+33.	In Maven Version, select MAVEN_HOME
+34.	In Goals, type: test
+35.	Click "Add post-build action" and select "Archive the artifacts"
+36.	In "Files to archive", type: */
+37.	Click "Add post-build action" and select "Build other projects"
+38.	Type: SampleMavenProject_deploy
+39.	Click Apply and Save
+40.	Click on "New Item"
+41.	Type: SampleMavenProject_deploy
+42.	Select "Freestyle project" and click OK
+43.	Click "Add build step" and select "Copy artifacts from other projects"
+44.	In Project name, type: SampleMavenProject_test
+45.	In "Artifacts to copy", type: **/*.war
+46.	Click "Add build step" and select "deploy war/ear"
+47.	War **/*.war and context path as samplewebprojectmaven
+48.	In containers add tomcat and go to credentials
+49.	Click jenkins
+50.	Write username and pw
+51.	Choose credentials
+52.	Give the url localhost:8080
+53.	Click "Add post-build action" and select "Archive the artifacts"
+54.	In "Files to archive", type: */
+55.	Click Apply and Save  Go to Dashboard
+56.	Click on the + symbol (New View)
+57.	Type: SampleMavenProject_pipeline
+58.	Select "Build Pipeline View"
+59.	Scroll to "Pipeline Flow"
+60.	Under "Select Initial Job", choose: SampleMavenProject_build
+61.	Click Apply and OK
+62.	run
+
+
+------------------------------------------------------------------------------------------
+
+PIPELINE CREATION USING SCRIPT
+
+1. In the Jenkins select the new item and give the name as pipeline_script and select pipeline and click ok 
+2. In the pipeline section give definition as pipeline script and enter the script with git repo link and project name
+3. apply and save
+4. build now
+
+
+pipeline {
+    agent any
+
+    stages {
+        stage('Hello 1') {
+            steps {
+                echo 'Hello World 1'
+            }
+        }
+
+        stage('Hello 2') {
+            steps {
+                echo 'Hello World 2'
+            }
+        }
+    }
+}
+
+
+------------------------------------------------------------------------------------------
+
+KUBERNETES USING MINIKUBE
+
+
+1. open powershell
+2. minikube start
+3. kubectl create deployment mynginx --image=nginx
+4. kubectl get pods 
+5. kubectl expose deployment mynginx --type=NodePort --port=80 --target-port=80
+6. kubectl scale deployment mynginx --replicas=4
+7. kubectl port-forward svc/mynginx 8081:80
+
+OPEN http://localhost:8081
+kubectl describe pods
+
+8. kubectl delete deployment mynginx
+9. kubectl delete service mynginx
+10. minikube stop
+
+
+------------------------------------------------------------------------------------------
+
+NAGIOS
+
+1. docker pull jasonrivers/nagios:latest
+2. docker run --name nagiosdemo -p 8888:80 jasonrivers/nagios:latest
+
+OPEN http://localhost:8888
+
+Login:
+username: nagiosadmin
+password: nagios
+
+3. docker stop nagiosdemo
+
+------------------------------------------------------------------------------------------
+
+JENKINS CI/CD USING WEBHOOK WITH JENKINS
+
+
+1.	Open CMD and run:
+	ngrok http 8080
+2.	Copy the HTTPS URL shown by ngrok (example: https://abc123.ngrok.io)
+3.	Open your GitHub repository and go to Settings → Webhooks
+4.	Click Add Webhook
+5.	In Payload URL, enter:
+	https://your-ngrok-url/github-webhook/
+6.	Set Content type to: application/json
+7.	Select the option: Just the push event
+8.	Click Add webhook
+9.	Open your Jenkins job and click Configure
+10.	Go to Build Triggers
+11.	Tick: GitHub hook trigger for GITScm polling
+12.	Save the job
+13.	Make any change to your GitHub project
+14.	Push the code to GitHub
+15.	Jenkins will automatically start building
+16.	Open your Google Account → Security
+17.	Turn on 2-step verification
+18.	Create a Gmail App Password (choose “Other”)
+19.	Copy the 16-character app password
+20.	Open Jenkins → Manage Jenkins → Configure System
+21.	Scroll to “E-mail Notification”
+22.	Fill the fields:
+	SMTP Server: smtp.gmail.com
+	Use SMTP Authentication: Yes
+	Username: your Gmail address
+	Password: your 16-character app password
+	Use SSL: Yes
+	Port: 465
+23.	Click Send test email and verify that you receive it
+24.	Open your Jenkins job again → Configure
+25.	Go to Post-build Actions
+26.	Add: Editable Email Notification
+27.	Enter recipient email addresses
+28.	Save the job and run a build
+
+------------------------------------------------------------------------------------------
+AWS
+
+1. go to modules
+2. select the launch aws learner lab
+3. then start lab
+4. wait till aws is green then click on it 
+5. go to EC2 and then launch instance 
+6. give name tag, then choose ubuntu, 
+	- Create a new keypair and select type as RSA and .pem option and click 	on create key pair 
+	- In network settings select “create security group” and give the security 	group name
+	-  Click on edit button on the top right corner and select type : ssh and 	source : anywhere
+	LAUNCH INSTANCE
+7. once the instance is created, click on the instance and then click on connect and select ssh client and copy the ssh command
+8. int the cli of the .pem file paste the ssh command and type the following commands
+    1. sudo su
+    2. sudo apt-get update
+    3. sudo apt-get install docker.io
+       sudo apt-get install -y docker.io 
+    4. sudo docker —version
+    5. sudo docker images
+    6. sudo docker ps
+    7. git clone http of the maven web application
+    8. cd folder name
+    9. ls
+    10. nano Dockerfile
+    11. sudo docker build -t img1  .
+    12. sudo docker run -d -p img1 8081:8080 img1
+    13. Take the public IP address from the instances in AWS and open it in 	chrome along with the port number mapped.
+    14. got to incog ip:portnumber
+    15. exit
+
+
+FROM tomcat:9.0
+
+RUN rm -rf /usr/local/tomcat/webapps/*
+
+COPY target/*.war /usr/local/tomcat/webapps/ROOT.war
+
+CMD ["catalina.sh", "run"]
+
+
+------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
